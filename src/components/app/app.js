@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
@@ -7,12 +7,34 @@ import PersonDetails from '../person-details';
 
 import './app.css';
 
-const App = () => {
+export default class App extends Component {
+
+  state = {
+    showRandomPlanet: true
+  };
+
+  onToggleRandomPlanet = () => {
+    this.setState((state) => {
+      return {
+        showRandomPlanet: !state.showRandomPlanet
+      }
+    });
+  };
+
+  render() {
+
+    const planet = this.state.showRandomPlanet ?
+    <RandomPlanet/> :
+    null;
+
   return (
     <div>
       <Header />
-      <RandomPlanet />
-
+      {planet}
+      <button className="btn btn-warning mb-md-3"
+              onClick={this.onToggleRandomPlanet}>
+                Toogle Random planet
+      </button>
       <div className="row mb2">
         <div className="col-md-6">
           <ItemList />
@@ -22,7 +44,5 @@ const App = () => {
         </div>
       </div>
     </div>
-  );
+  );};
 };
-
-export default App;
