@@ -1,0 +1,15 @@
+.error-indicator {
+  margin: 0 auto;
+  color: orange;
+  display: grid
+}
+
+.error-indicator img {
+  margin: 0 auto;
+  max-width: 50px;
+  margin-bottom: 10px;
+}
+
+.error-indicator span {
+  text-align: center;
+}
