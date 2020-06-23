@@ -1,22 +1,28 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import './header.css';
 
-export default class Header extends Component {
+const Header = () => {
+  return (
+    <div className="header d-flex">
+      <h3>
+        <a href="#">
+          StarDB
+        </a>
+      </h3>
+      <ul className="d-flex">
+        <li>
+          <a href="#">People</a>
+        </li>
+        <li>
+          <a href="#">Planets</a>
+        </li>
+        <li>
+          <a href="#">Starships</a>
+        </li>
+      </ul>
+    </div>
+  );
+};
 
-  render() {
-    return (
-      <div className="header">
-        <h3>Star DB</h3>
-        <ul className="menu d-flex">
-          {/* eslint-disable-next-line */}
-          <li><a href="#">People</a></li>
-          {/* eslint-disable-next-line */}
-          <li><a href="#">Planets</a></li>
-          {/* eslint-disable-next-line */}
-          <li><a href="#">Starships</a></li>
-        </ul>
-      </div>
-    );
-  }
-
-}
+export default Header;

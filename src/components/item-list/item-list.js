@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
+
 import './item-list.css';
 
 export default class ItemList extends Component {
+
   render() {
-    return(
-      <div className="item-list">
-        <ul class="list-group">
-        <li class="list-group-item">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Morbi leo risus</li>
-        <li class="list-group-item">Porta ac consectetur ac</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-      </div>
+    return (
+      <ul className="item-list list-group">
+        <li className="list-group-item">
+          Luke Skywalker
+        </li>
+        <li className="list-group-item">
+          Darth Vader
+        </li>
+        <li className="list-group-item">
+          R2-D2
+        </li>
+      </ul>
     );
   }
 }
