@@ -7,12 +7,14 @@ import PersonDetails from '../person-details';
 
 import './app.css';
 import ErrorButton from '../error-button';
+import ErrorIndicator from '../error-indicator';
 
 export default class App extends Component {
 
   state = {
     showRandomPlanet: true,
-    selectedPerson: null
+    selectedPerson: null,
+    hasError: false
   };
 
   onToggleRandomPlanet = () => {
@@ -29,7 +31,16 @@ export default class App extends Component {
     })
   }
 
+  componentDidCatch() {
+    console.log('componentDidCatch() ');
+    this.setState({hasError: true});
+  } 
+
   render() {
+
+    if ( this.state.hasError) {
+      return <ErrorIndicator />
+    }
 
     const planet = this.state.showRandomPlanet ?
     <RandomPlanet/> :
