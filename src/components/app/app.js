@@ -8,12 +8,12 @@ import PersonDetails from '../person-details';
 import './app.css';
 import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
+import PeoplePage from '../people-page';
 
 export default class App extends Component {
 
   state = {
     showRandomPlanet: true,
-    selectedPerson: null,
     hasError: false
   };
 
@@ -24,12 +24,6 @@ export default class App extends Component {
       }
     });
   };
-
-  onPersonSelected = (id) => {
-    this.setState( {
-      selectedPerson: id
-    })
-  }
 
   componentDidCatch() {
     console.log('componentDidCatch() ');
@@ -50,19 +44,14 @@ export default class App extends Component {
     <div>
       <Header />
       {planet}
-      <button className="btn btn-warning mb-md-3"
+      <button className="btn btn-warning mb-md-3 mr-2"
               onClick={this.onToggleRandomPlanet}>
                 Toogle Random planet
       </button>
       <ErrorButton />
-      <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList onItemSelected={this.onPersonSelected}/>
-        </div>
-        <div className="col-md-6">
-          <PersonDetails personId = {this.state.selectedPerson}/>
-        </div>
-      </div>
+      <PeoplePage />
+      <PeoplePage />  
+      <PeoplePage />  
     </div>
   );};
 };
