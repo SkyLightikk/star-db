@@ -9,8 +9,11 @@ import './app.css';
 import ErrorButton from '../error-button';
 import ErrorIndicator from '../error-indicator';
 import PeoplePage from '../people-page';
+import SwapiService from '../../services/swapi-service';
 
 export default class App extends Component {
+
+  swapiService = new SwapiService();
 
   state = {
     showRandomPlanet: true,
@@ -28,7 +31,20 @@ export default class App extends Component {
   componentDidCatch() {
     console.log('componentDidCatch() ');
     this.setState({hasError: true});
-  } 
+  }
+
+  getNamePlanet(planet) {
+    return (
+      <span>{`${planet.name} population is ${planet.population}`}
+        <button>!</button>
+      </span>
+
+    );
+  };
+
+  getNameStarship(starship) {
+    return `${starship.name}`
+  };
 
   render() {
 
@@ -50,8 +66,33 @@ export default class App extends Component {
       </button>
       <ErrorButton />
       <PeoplePage />
-      <PeoplePage />  
-      <PeoplePage />  
+
+      <div className="row mb2">
+        <div className="col-md-6">
+          <ItemList 
+            onItemSelected={this.onPersonSelected}
+            getData={this.swapiService.getAllPlanets}
+            renderItem={this.getNamePlanet}
+          />
+        </div>
+        <div className="col-md-6">
+          <PersonDetails personId = {this.state.selectedPerson}/>
+        </div>
+      </div>
+
+      <div className="row mb2">
+        <div className="col-md-6">
+          <ItemList 
+            onItemSelected={this.onPersonSelected}
+            getData={this.swapiService.getAllStarships}
+            renderItem={this.getNameStarship}
+          />
+        </div>
+        <div className="col-md-6">
+          <PersonDetails personId = {this.state.selectedPerson}/>
+        </div>
+      </div>
+
     </div>
   );};
 };
