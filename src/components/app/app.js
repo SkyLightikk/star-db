@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 
 import Header from '../header';
 import RandomPlanet from '../random-planet';
-import ErrorIndicator from '../error-indicator';
-import SwapiService from '../../services/swapi-service';
-import ItemDetails from '../item-details';
-import Row from '../row';
-import { Record } from '../item-details/item-details';
+import ErrorBoundry from '../error-boundry';
+
+import Row from "../row/row";
+import ItemDetails, { Record } from "../item-details/item-details";
+import SwapiService from "../../services/swapi-service";
+
+import ItemList from '../item-list';
 
 import './app.css';
 
@@ -15,11 +17,10 @@ export default class App extends Component {
   swapiService = new SwapiService();
 
   state = {
-    showRandomPlanet: true,
-    hasError: false
+    showRandomPlanet: true
   };
 
-  onToggleRandomPlanet = () => {
+  toggleRandomPlanet = () => {
     this.setState((state) => {
       return {
         showRandomPlanet: !state.showRandomPlanet
@@ -27,99 +28,64 @@ export default class App extends Component {
     });
   };
 
-  componentDidCatch() {
-    console.log('componentDidCatch() ');
-    this.setState({hasError: true});
-  }
-
-  getNamePlanet(planet) {
-    return (
-      <span>{`${planet.name} population is ${planet.population}`}
-        <button>!</button>
-      </span>
-
-    );
-  };
-
-  getNameStarship(starship) {
-    return `${starship.name}`
-  };
-
   render() {
 
-    if ( this.state.hasError) {
-      return <ErrorIndicator />
-    }
-
     const planet = this.state.showRandomPlanet ?
-    <RandomPlanet/> :
-    null;
+      <RandomPlanet/> :
+      null;
 
-    const {getPerson, getStarship, getPersonImage,
-          getStarshipImage} = this.swapiService;
+    const { getPerson,
+            getStarship,
+            getPersonImage,
+            getStarshipImage,
+            getAllPeople,
+            getAllPlanets } = this.swapiService;
 
     const personDetails = (
-      <ItemDetails 
-        itemId={11} 
+      <ItemDetails
+        itemId={11}
         getData={getPerson}
         getImageUrl={getPersonImage} >
 
         <Record field="gender" label="Gender" />
-        <Record field="eyeColor" label="Eye color" />
+        <Record field="eyeColor" label="Eye Color" />
 
       </ItemDetails>
     );
 
     const starshipDetails = (
-      <ItemDetails 
+      <ItemDetails
         itemId={5}
         getData={getStarship}
-        getImageUrl={getStarshipImage} >
-        <Record field="manufacturer" label="Manufacturer" />
-        <Record field="passengers" label="Passengers" />
+        getImageUrl={getStarshipImage}>
+
+        <Record field="model" label="Model" />
+        <Record field="length" label="Length" />
+        <Record field="costInCredits" label="Cost" />
       </ItemDetails>
     );
 
-  return (
-    <div>
-      <Header />
-      {/* {planet} */}
-      {/* <button className="btn btn-warning mb-md-3 mr-2"
-              onClick={this.onToggleRandomPlanet}>
-                Toogle Random planet
-      </button>
-      <ErrorButton />
-      <PeoplePage /> */}
-      <Row 
-        left={personDetails}
-        right={starshipDetails} />
+    return (
+      <ErrorBoundry>
+        <div className="stardb-app">
+          <Header />
 
-      {/* <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList 
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllPlanets}
-            renderItem={this.getNamePlanet}
-          />
-        </div>
-        <div className="col-md-6">
-          <ItemDetails itemId = {this.state.selectedPerson}/>
-        </div>
-      </div> */}
+          <ItemList
+            getData={getAllPeople}
+            onItemSelected={() => {}}>
 
-      {/* <div className="row mb2">
-        <div className="col-md-6">
-          <ItemList 
-            onItemSelected={this.onPersonSelected}
-            getData={this.swapiService.getAllStarships}
-            renderItem={this.getNameStarship}
-          />
-        </div>
-        <div className="col-md-6">
-          <ItemDetails itemId = {this.state.selectedPerson}/>
-        </div>
-      </div> */}
+            { ({name}) => <span>{name}</span> }
+          </ItemList>
 
-    </div>
-  );};
-};
+          <ItemList
+            getData={getAllPlanets}
+            onItemSelected={() => {}}>
+
+            { ({name}) => <span>{name}</span> }
+          </ItemList>
+
+        </div>
+      </ErrorBoundry>
+    );
+  }
+}

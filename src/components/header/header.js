@@ -6,23 +6,19 @@ const Header = () => {
   return (
     <div className="header d-flex">
       <h3>
-        {/* eslint-disable-next-line */}
-        <a href="#">
+        <a href="#/">
           StarDB
         </a>
       </h3>
       <ul className="d-flex">
         <li>
-          {/* eslint-disable-next-line */}
-          <a href="#">People</a>
+          <a href="#/people">People</a>
         </li>
         <li>
-          {/* eslint-disable-next-line */}
-          <a href="#">Planets</a>
+          <a href="#/planets">Planets</a>
         </li>
         <li>
-          {/* eslint-disable-next-line */}
-          <a href="#">Starships</a>
+          <a href="#/starships">Starships</a>
         </li>
       </ul>
     </div>

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './row.css';
+
 const Row = ({ left, right }) => {
   return (
     <div className="row mb2">
@@ -7,7 +9,7 @@ const Row = ({ left, right }) => {
         {left}
       </div>
       <div className="col-md-6">
-      {right}
+        {right}
       </div>
     </div>
   );
