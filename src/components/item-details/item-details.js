@@ -5,6 +5,20 @@ import SwapiService from '../../services/swapi-service';
 import Spinner from '../spinner';
 import ErrorButton from '../error-button';
 
+
+const Record = ({field, label, item}) => {
+  return (
+    <li className="list-group-item">
+            <span className="term">{label}:</span>
+            <span>{item[field]}</span>
+          </li>
+  );
+};
+
+export {
+  Record
+};
+
 export default class ItemDetails extends Component {
   swapiService = new SwapiService();
 
@@ -49,7 +63,7 @@ export default class ItemDetails extends Component {
       return <span>Выберите ??? из списка</span>
     };
     const spinner = this.state.loading ? <Spinner /> : null;
-    const content = !spinner ? <ItemView item={item} image={image}/> : null;
+    const content = !spinner ? <ItemView item={item} image={image} children={this.props.children}/> : null;
 
     return (
       <div className="item-details card">
@@ -60,7 +74,7 @@ export default class ItemDetails extends Component {
   }
 }
 
-const ItemView = ({item, image}) => {
+const ItemView = ({item, image, children}) => {
 
   const { name, gender, birthYear,eyeColor } = item;
     return(
@@ -71,21 +85,12 @@ const ItemView = ({item, image}) => {
         <div className="card-body">
           <h4>{name}</h4>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">
-              <span className="term">Gender</span>
-              <span>{gender}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Birth Year</span>
-              <span>{birthYear}</span>
-            </li>
-            <li className="list-group-item">
-              <span className="term">Eye Color</span>
-              <span>{eyeColor}</span>
-            </li>
-            <li className="list-group-item">
+            {
+              React.Children.map(children, child => {
+                return React.cloneElement(child, {item});
+              })
+            }
               <ErrorButton />
-            </li>
           </ul>
         </div>
       </React.Fragment>
