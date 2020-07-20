@@ -1,5 +1,6 @@
 import React from 'react';
 import './item-list.css';
+import PropTypes from 'prop-types';
 
 const ItemList = (props) => {
 
@@ -28,5 +29,12 @@ const ItemList = (props) => {
 ItemList.defaultProps = {
   onItemSelected: () => {}
 };
+
+ItemList.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired ,
+  onItemSelectedL: PropTypes.func,
+  renderLabel: PropTypes.func.isRequired
+}
+
 
 export default ItemList;
