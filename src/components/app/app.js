@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import Header from '../header';
 import RandomPlanet from '../random-planet';
 import ErrorBoundry from '../error-boundry';
-
-import Row from "../row/row";
+import SwapiService from '../../services/swapi-service';
 import DummySwapiService from '../../services/dummy-swapi-service'
 import { SwapiServiceProvider } from '../swapi-service-context';
+
+import Row from "../row/row";
+
 
 import {
   PersonList,
@@ -18,7 +20,6 @@ import {
 } from '../sw-components';
 
 import './app.css';
-import SwapiService from '../../services/swapi-service';
 
 export default class App extends Component {
 
@@ -37,14 +38,6 @@ export default class App extends Component {
     });
   }
 
-  toggleRandomPlanet = () => {
-    this.setState((state) => {
-      return {
-        showRandomPlanet: !state.showRandomPlanet
-      }
-    });
-  };
-
   render() {
 
     const planet = this.state.showRandomPlanet ?
@@ -58,22 +51,17 @@ export default class App extends Component {
           <Header onServiceChange={this.onServiceChange} />
           {planet}
 
-          <Row left ={
-            <div>
-              <PersonList/>
-              <PlanetList/>
-              <StarshipList/>
-            </div>
+          <Row 
+            left={<PersonList/>}
+            right={<PersonDetails itemId={11} />}/>
 
-                }
-                right={
-                  <div>
-                  <PersonDetails itemId={11} />
-                  <PlanetDetails itemId={9} />
-                  <StarshipDetails itemId={15} />
-                  </div>
-                }>
-          </Row>      
+          <Row 
+            left={  <PlanetList/> }
+            right={<PlanetDetails itemId={9} />}/>
+
+          <Row 
+            left={ <StarshipList/>}
+            right={<StarshipDetails itemId={15} />}/>
         </div>
         </SwapiServiceProvider>
       </ErrorBoundry>
