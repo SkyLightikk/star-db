@@ -33,7 +33,7 @@ ItemList.defaultProps = {
 ItemList.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired ,
   onItemSelectedL: PropTypes.func,
-  renderLabel: PropTypes.func.isRequired
+  renderLabel: PropTypes.func
 }
 
 
